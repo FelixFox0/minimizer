@@ -40,18 +40,9 @@ class ShortUrlGenerator
             throw new \DomainException('ShortUrlGenerator instance already exists, cannot be recreated. Use instance() instead of forge() to retrieve the existing instance.');
         }
         if($name == self::DEFAULT_NAME || !$name){
-//            if($alphabet){
-//                throw new \DomainException('If you use default instance and you must use default alphabet. Use empty array');
-//            }
-//            die();
             $alphabet = Config::get('alphabet.' . self::DEFAULT_NAME);
-//            var_dump(Config::get('app.cipher'));
-//die();
-//            $alphabet = \Config::get('shorturlgenerator.alphabet');
-//        }elseif(empty($alphabet)){
         }else{
             $alphabet = Config::get('alphabet.'.$name);
-//            throw new \DomainException('ShortUrlGenerator must have alphabet');
         }
         return static::$instances[$name] = new static($name, $alphabet, $minLenUrl, $characters);
     }
@@ -132,10 +123,8 @@ class ShortUrlGenerator
     public function addGetShortUrlByOriginalUrl(string $url, array $patterns = [])
     {
         $last = Minimizer::findMaxId($this->name);
-//        var_dump($last); die();
         if(isset($last->generatedUrl)){
             if($exist = Minimizer::exist($url, $this->name)){
-//                var_dump($exist);die();
                 return $exist->generatedUrl;
             }
             $lastGeneratedUrl = $this->getNext($last->generatedUrl);

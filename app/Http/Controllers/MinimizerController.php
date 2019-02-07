@@ -26,8 +26,6 @@ class MinimizerController extends Controller
      */
     public function create(Request $request)
     {
-//        var_dump($request); die();
-//        ShortUrlGenerator::instance()->addGetShortUrlByOriginalUrl($request->url);
         return view('create', ['url' => ShortUrlGenerator::instance()->addGetShortUrlByOriginalUrl($request->url)]);
     }
 
@@ -45,12 +43,11 @@ class MinimizerController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Minimizer  $minimizer
-     * @return \Illuminate\Http\Response
+     * @param string $hash
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
     public function show(string $hash)
     {
-//        var_dump(ShortUrlGenerator::instance()->getOriginUrl($hash)->originalUrl);
         return redirect(ShortUrlGenerator::instance()->getOriginUrl($hash)->originalUrl, 302, ['Cache-Control: private, no-cache']);
     }
 
